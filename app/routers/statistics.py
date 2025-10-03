@@ -20,6 +20,7 @@ class CategoryStats(BaseModel):
     count: int
     percentage: float
     descriptions: str = ""  # 기본값 추가
+    date: str  # 거래 날짜 추가
 
 
 class StatisticsResponse(BaseModel):
@@ -44,7 +45,8 @@ def get_statistics(
     transactions = (
     db.query(
         Transaction.amount,
-        Transaction.description,  # ✅ 여기에 추가
+        Transaction.description,
+        Transaction.transaction_date,
         Category.id.label("category_id"),
         Category.name.label("category_name"),
         Category.color.label("category_color"),
@@ -72,7 +74,8 @@ def get_statistics(
                 total=float(t.amount),
                 count=1,
                 descriptions = (t.description or ""),
-                percentage=round((float(t.amount) / total_amount) * 100, 2) if total_amount > 0 else 0
+                percentage=round((float(t.amount) / total_amount) * 100, 2) if total_amount > 0 else 0,
+                date=t.transaction_date.strftime("%Y-%m-%d")
             )
         )
 
