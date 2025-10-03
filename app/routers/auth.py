@@ -37,6 +37,6 @@ def login(user: schemas.UserLogin, db: Session = Depends(deps.get_db)):
     if not db_user or not bcrypt.verify(user.password, db_user.password):
         raise HTTPException(status_code=401, detail="Invalid email or password")
 
-    token = create_access_token(data={"sub": db_user.id}, expires_delta=timedelta(minutes=ACCESS_TOKEN_EXPIRE_MINUTES))
+    token = create_access_token(data={"sub": db_user.id})
     
     return {"access_token": token, "token_type": "bearer"}
