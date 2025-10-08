@@ -7,6 +7,7 @@
 uvicorn app.main:app --reload --host 0.0.0.0 --port 3000
 ```
 
+```bash
 🧑‍💻 Users Table
 Column	Type	Constraints	Description
 id	CHAR(36)	PRIMARY KEY, NOT NULL	UUID (user unique ID)
@@ -80,3 +81,4 @@ scss
 Users (1) ────< (N) Categories
 Users (1) ────< (N) Transactions
 Categories (1) ────< (N) Transactions (nullable)
+```
